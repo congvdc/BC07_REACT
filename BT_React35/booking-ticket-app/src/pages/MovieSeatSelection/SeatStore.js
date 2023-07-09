@@ -1,9 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import SeatItem from './SeatItem';
+import SeatDetail from './seatDetail';
 
 class SeatStore extends Component {
+    state = {
+        values: {
+            username: '',
+            numseats: '',
+        },
+    }
+    getValueInput = (event) => {
+        let { value, id } = event.target;
+        let newValue = this.state.values;
+        newValue[id] = value;
+        let newError1 = this.state.errors1;
+        console.log(newValue);
+
+        if (newValue[id] == "") {
+            newError1[id] = `${id} is required`;
+        }
+
+        this.setState({
+            values: newValue,
+        });
+    };
     render() {
+        const item = this.props;
+
         console.log(this.props);
         return (
             <div>
@@ -15,7 +39,7 @@ class SeatStore extends Component {
                                 <span>*</span>
                             </label>
                             <input
-
+                                onChange={this.getValueInput}
                                 type="text"
                                 id="Username"
                                 required />
@@ -26,7 +50,7 @@ class SeatStore extends Component {
                                 <span>*</span>
                             </label>
                             <input
-
+                                onChange={this.getValueInput}
                                 type="number"
                                 id="Numseats"
                                 required min={1} />
@@ -34,7 +58,13 @@ class SeatStore extends Component {
                     </div>
                     <button
                         type='submit'
-                        onclick="takeData()">Start Selecting</button>
+                        onClick={() => {
+                            this.props.selectSeat(item);
+                        }}
+                    // onclick="takeData()"
+                    >
+                        Start Selecting
+                    </button>
                 </div>
 
                 <ul class="seat_w3ls">
@@ -62,13 +92,20 @@ class SeatStore extends Component {
                                 <td>12</td>
                             </tr>
                             {this.props.seat.arrSeat.map((item, index) => {
+
                                 return (
-                                    <SeatItem item={item} />
+                                    <tr key={index}>
+                                        <SeatItem item={item} />
+                                    </tr>
                                 )
                             })}
                         </tbody>
-
                     </table>
+                    <div className="screen">
+                        <h2 className="wthree">Screen this way</h2>
+                    </div>
+                    <button onclick="updateTextArea()">Confirm Selection</button>
+                    <SeatDetail />
                 </div>
             </div>
         );
@@ -85,7 +122,20 @@ const mapStateToProps = (state) => {
         seat: {
             arrSeat: state.seat.arrSeat.filter((seat) => seat.hang !== ''),
         },
+        activeSeat: false,
     };
 };
 
-export default connect(mapStateToProps)(SeatStore);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        selectSeat: (item) => {
+            const action = {
+                type: 'SELECT_SEAT',
+                payload: item,
+            };
+            dispatch(action);
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SeatStore);

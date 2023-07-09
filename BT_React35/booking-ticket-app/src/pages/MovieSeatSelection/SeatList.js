@@ -514,6 +514,7 @@ export default class SeatList extends Component {
                                 </td>
                             </tr>
                         </tbody></table>
+                        
                     <div className="screen">
                         <h2 className="wthree">Screen this way</h2>
                     </div>
