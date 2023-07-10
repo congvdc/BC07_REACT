@@ -12,17 +12,17 @@ class seatDetail extends Component {
                         <th>Number of Seats</th>
                         <th>Seats</th>
                     </tr>
-                        {this.props.seat.map((item, index) => {
+                        {this.props.book.map((book, index) => {
                             return (
-                                <tr>
+                                <tr key={index}>
                                     <td>
-                                        <textarea id="nameDisplay" disabled defaultValue={item.username} />
+                                        <textarea id="nameDisplay" disabled defaultValue={newValue.username} />
                                     </td>
                                     <td>
-                                        <textarea id="NumberDisplay" disabled defaultValue={item.numberSeats} />
+                                        <textarea id="NumberDisplay" disabled defaultValue={newValue.numseats} />
                                     </td>
                                     <td>
-                                        <textarea id="seatsDisplay" disabled defaultValue={item.soGhe} />
+                                        <textarea id="seatsDisplay" disabled defaultValue={book.seatNumber} />
                                     </td>
                                 </tr>
                             )

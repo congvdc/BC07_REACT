@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-class BookTickets extends Component {
+class Seat extends Component {
     render() {
         // console.log(this.props.seat.arrSeat);
         console.log(this.props.book)
@@ -139,4 +139,4 @@ const mapDispatchToProps = (dispatch) => {
         },
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(BookTickets);
+export default connect(mapStateToProps, mapDispatchToProps)(Seat);

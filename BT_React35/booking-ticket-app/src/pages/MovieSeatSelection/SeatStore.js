@@ -14,7 +14,7 @@ class SeatStore extends Component {
         let { value, id } = event.target;
         let newValue = this.state.values;
         newValue[id] = value;
-        let newError1 = this.state.errors1;
+        // let newError1 = this.state.errors1;
         console.log(newValue);
 
         if (newValue[id] == "") {
@@ -27,7 +27,7 @@ class SeatStore extends Component {
     };
     render() {
         const item = this.props;
-
+        console.log(this.props.book);
         console.log(this.props);
         return (
             <div>
@@ -43,7 +43,6 @@ class SeatStore extends Component {
                                 type="text"
                                 id="Username"
                                 required />
-
                         </div>
                         <div className="agileits-right">
                             <label> Number of Seats
@@ -61,7 +60,6 @@ class SeatStore extends Component {
                         onClick={() => {
                             this.props.selectSeat(item);
                         }}
-                    // onclick="takeData()"
                     >
                         Start Selecting
                     </button>
@@ -112,26 +110,29 @@ class SeatStore extends Component {
     }
 }
 
-const mapStateToProps1 = (state) => {
-    return {
-        seat: state.seat,
-    };
-};
+// const mapStateToProps1 = (state) => {
+//     return {
+//         seat: state.seat,
+//     };
+// };
 const mapStateToProps = (state) => {
     return {
         seat: {
             arrSeat: state.seat.arrSeat.filter((seat) => seat.hang !== ''),
         },
-        activeSeat: false,
+        book: state.seat.arrBook,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        selectSeat: (item) => {
+        selectSeat: (seatNumber, seatPrice) => {
             const action = {
                 type: 'SELECT_SEAT',
-                payload: item,
+                payload: {
+                    seatNumber,
+                    seatPrice,
+                },
             };
             dispatch(action);
         },
